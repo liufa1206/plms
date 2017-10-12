@@ -15,3 +15,15 @@ windows10
 ##本版本1.0.0
 ##目标
 登录界面修改，bootstrap
+##运行
+``` python 
+#同步数据库
+python manage.py makemigrations
+python manage.py migrate
+#运行
+python manager.py runserver 0.0.0.0:80
+```
+
+
+
+
