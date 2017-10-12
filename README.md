@@ -12,7 +12,8 @@ django项目练手
 python 2.7.3 
 django 1.11.6 
 windows10
-##本版本1.0.0
+##本版本
+1.0.0
 ##目标
 登录界面修改，bootstrap
 ##运行
