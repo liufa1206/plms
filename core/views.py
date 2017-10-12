@@ -1,9 +1,12 @@
 #coding=utf-8
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import RequestContext
 from django import forms
+
 from models import User
+from django.contrib.auth import authenticate
 
 #表单
 class UserForm(forms.Form):
@@ -26,30 +29,41 @@ def regist(req):
         uf = UserForm()
     return render(req,'regist.html',{'uf':uf})
 
-#登陆
+
+#登录
 def login(req):
     if req.method == 'POST':
         uf = UserForm(req.POST)
         if uf.is_valid():
             #获取表单用户密码
-            username = uf.cleaned_data['username']
-            password = uf.cleaned_data['password']
+            A = uf.cleaned_data['username']
+            B = uf.cleaned_data['password']
             #获取的表单数据与数据库进行比较
-            user = User.objects.filter(username__exact = username,password__exact = password)
-            if user:
+            #user = authenticate(username__exact = username,password__exact = password)
+            #user = User.objects.filter(username__exact = username,password__exact = password)
+            if A and B:
+                #user = authenticate(username=username, password=password)
+                user = User.objects.filter(username__exact=A, password__exact=B)
                 #比较成功，跳转index
-                response = HttpResponseRedirect('/index/')
+
+                if len(user)== 2:
+                    #response = HttpResponseRedirect('/index/')
+                    #response.set_cookie('username', username, 3600)
+                    return render(req, 'index.html', {'uf': uf})
+                else:
+                    pass
                 #将username写入浏览器cookie,失效时间为3600
-                response.set_cookie('username',username,3600)
-                return response
+
             else:
                 #比较失败，还在login
-                return HttpResponseRedirect('/online/login/')
+                pass
     else:
         uf = UserForm()
-    return render(req,'login.html',{'uf':uf})
+    return render(req, 'login.html', {'uf': uf})
+
 
 #登陆成功
+@login_required()
 def index(req):
     username = req.COOKIES.get('username','')
     return render(req,'index.html' ,{'username':username})
