@@ -1,6 +1,8 @@
 
 #PLMS-personal life management system
 `个人生活管理系统`
+##下一阶段目标
+index主页功能完善
 ##功能说明
 django项目练手
 * 管理个人的计划安排，长期，短期
