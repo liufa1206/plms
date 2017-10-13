@@ -3,6 +3,7 @@ from django.contrib import admin
 import views
 admin.autodiscover()
 
+
 urlpatterns = [
     url(r'^index/$',views.index),
     url(r'^login/$',views.login),

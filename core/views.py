@@ -7,11 +7,14 @@ from django.contrib.auth.hashers import make_password, check_password
 from models import User
 
 
+
 #表单
 class UserForm(forms.Form):
     username = forms.CharField(label='用户名',max_length=100)
     password = forms.CharField(label='密码',widget=forms.PasswordInput())
 
+    def __str__(self):
+        return self.name
 
 #注册
 def regist(req):
@@ -22,6 +25,8 @@ def regist(req):
             username = uf.cleaned_data['username']
             password = uf.cleaned_data['password']
             #添加到数据库
+
+
             password = make_password(password)
             user = User.objects.filter(username__exact=username)
             if len(user)== 0:
@@ -43,29 +48,25 @@ def login(req):
             username = uf.cleaned_data['username']
             password = uf.cleaned_data['password']
             #获取的表单数据与数据库进行比较
-
-            if username and password:
-                #user = authenticate(username=username, password=password)
-                password2 = make_password(password)
-                user = User.objects.filter(username__exact=username)
-                #比较成功，跳转index
-
-                if len(user) != 0:
-                    a = check_password(password,password2)
-                    if a:
+            user = User.objects.filter(username__exact=username)
+            if len(user) !=0:
+                if username and password:
+                    password2 = User.objects.filter(username=username).values('password')[0]['password']
+                    if check_password(password,password2)== True:
                         return render(req, 'index.html', {'uf': uf})
                     else:
-                        pass
+                        return render(req, 'login.html', {'uf': uf})
                 else:
-                    pass
-
+                    return render(req, 'login.html', {'uf': uf})
 
             else:
-                #比较失败，还在login
-                pass
-    else:
-        uf = UserForm()
-    return render(req, 'login.html', {'uf': uf})
+                return render(req, 'login.html', {'uf': uf})
+
+              ##  a = check_password(password,password2)
+
+              ## return render(req, 'index.html', {'a': a})
+
+
 
 
 #登陆成功
@@ -80,3 +81,8 @@ def logout(req):
     #清理cookie里保存username
     response.delete_cookie('username')
     return response
+
+def page_not_found(req):
+    return render(req,'404.html')
+
+

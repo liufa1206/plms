@@ -18,6 +18,11 @@ from django.contrib import admin
 from core import urls
 import core
 
+
+
+handler404 = core.views.page_not_found
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'',include(core.urls)),
