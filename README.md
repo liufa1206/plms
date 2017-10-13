@@ -19,6 +19,10 @@ windows10
 ##目标
 登录界面修改，bootstrap
 ##运行
+修改setting文件
+```python
+DEBUG = True
+```
 ``` python 
 #同步数据库
 python manage.py makemigrations
