@@ -21,7 +21,7 @@ import core
 
 
 handler404 = core.views.page_not_found
-
+handler500 = core.views.page_error
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

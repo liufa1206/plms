@@ -85,4 +85,7 @@ def logout(req):
 def page_not_found(req):
     return render(req,'404.html')
 
+def page_error(request):
+    return render(request, '500.html')
+
 
