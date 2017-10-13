@@ -52,7 +52,7 @@ def login(req):
                     return render(req, 'index.html', {'uf': uf})
                 else:
                     pass
-                #将username写入浏览器cookie,失效时间为3600
+
 
             else:
                 #比较失败，还在login
