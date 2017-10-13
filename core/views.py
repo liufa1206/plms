@@ -61,10 +61,9 @@ def login(req):
 
             else:
                 return render(req, 'login.html', {'uf': uf})
-
-              ##  a = check_password(password,password2)
-
-              ## return render(req, 'index.html', {'a': a})
+    else:
+        uf = UserForm()
+        return render(req, 'login.html', {'uf': uf})
 
 
 
